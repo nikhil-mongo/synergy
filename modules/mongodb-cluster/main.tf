@@ -1,4 +1,5 @@
 resource "mongodbatlas_cluster" "data" {
+  source                         = "./modules/mongodb-cluster"
   project_id                   = var.project_id
   name                         = var.cluster_name
   cluster_type                 = "REPLICASET"
