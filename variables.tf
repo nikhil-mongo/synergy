@@ -61,22 +61,22 @@ variable "mongodbatlas_org_id" {
 #   type = string
 # }
 
-variable "snapshots_export_bucket_name" {
-  type    = string
-  default = null
-}
+# variable "snapshots_export_bucket_name" {
+#   type    = string
+#   default = null
+# }
 
-variable "export_bucket_iam_role" {
-  type    = string
-  default = null
-}
+# variable "export_bucket_iam_role" {
+#   type    = string
+#   default = null
+# }
 
-variable "export_prod_snapshots" {
-  type = bool
-  default = true
-}
+# variable "export_prod_snapshots" {
+#   type = bool
+#   default = true
+# }
 
-variable "update_existing_prod_snapshots" {
-  type = bool
-  default = false
-}
+# variable "update_existing_prod_snapshots" {
+#   type = bool
+#   default = false
+# }

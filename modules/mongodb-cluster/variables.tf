@@ -36,15 +36,15 @@ variable "is_production" {
   type = bool
 }
 
-variable "snapshots_export_bucket_id" {
-  type = string
-}
+# variable "snapshots_export_bucket_id" {
+#   type = string
+# }
 
-variable "export_prod_snapshots" {
-  type = bool
-}
+# variable "export_prod_snapshots" {
+#   type = bool
+# }
 
-variable "update_existing_prod_snapshots" {
-  type = bool
-}
+# variable "update_existing_prod_snapshots" {
+#   type = bool
+# }
 

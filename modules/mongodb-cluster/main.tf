@@ -26,50 +26,50 @@ locals {
   backup_minute_of_hour = 0
 }
 
-resource "mongodbatlas_cloud_backup_schedule" "nonprod_policy" {
-  count        = var.is_production ? 0 : 1
-  project_id   = mongodbatlas_cluster.data.project_id
-  cluster_name = mongodbatlas_cluster.data.name
+# resource "mongodbatlas_cloud_backup_schedule" "nonprod_policy" {
+#   count        = var.is_production ? 0 : 1
+#   project_id   = mongodbatlas_cluster.data.project_id
+#   cluster_name = mongodbatlas_cluster.data.name
 
-  reference_hour_of_day    = local.backup_hour_of_day
-  reference_minute_of_hour = local.backup_minute_of_hour
+#   reference_hour_of_day    = local.backup_hour_of_day
+#   reference_minute_of_hour = local.backup_minute_of_hour
 
-  policy_item_daily {
-    frequency_interval = 1
-    retention_unit     = "days"
-    retention_value    = 7
-  }
-}
+#   policy_item_daily {
+#     frequency_interval = 1
+#     retention_unit     = "days"
+#     retention_value    = 7
+#   }
+# }
 
-resource "mongodbatlas_cloud_backup_schedule" "prod_policy" {
-  count                                    = var.is_production ? 1 : 0
-  project_id                               = mongodbatlas_cluster.data.project_id
-  cluster_name                             = mongodbatlas_cluster.data.name
-  auto_export_enabled                      = var.export_prod_snapshots
-  use_org_and_group_names_in_export_prefix = true
-  reference_hour_of_day                    = local.backup_hour_of_day
-  reference_minute_of_hour                 = local.backup_minute_of_hour
-  restore_window_days                      = 2
-  update_snapshots                         = var.update_existing_prod_snapshots
+# resource "mongodbatlas_cloud_backup_schedule" "prod_policy" {
+#   count                                    = var.is_production ? 1 : 0
+#   project_id                               = mongodbatlas_cluster.data.project_id
+#   cluster_name                             = mongodbatlas_cluster.data.name
+#   auto_export_enabled                      = var.export_prod_snapshots
+#   use_org_and_group_names_in_export_prefix = true
+#   reference_hour_of_day                    = local.backup_hour_of_day
+#   reference_minute_of_hour                 = local.backup_minute_of_hour
+#   restore_window_days                      = 2
+#   update_snapshots                         = var.update_existing_prod_snapshots
 
-  export {
-    export_bucket_id = var.snapshots_export_bucket_id
-    frequency_type = "weekly"
-  }
+#   export {
+#     export_bucket_id = var.snapshots_export_bucket_id
+#     frequency_type = "weekly"
+#   }
 
-  policy_item_hourly {
-    frequency_interval = 12
-    retention_unit     = "days"
-    retention_value    = 2
-  }
-  policy_item_daily {
-    frequency_interval = 1
-    retention_unit     = "days"
-    retention_value    = 7
-  }
-  policy_item_weekly {
-    frequency_interval = 1
-    retention_unit     = "days"
-    retention_value    = 7
-  }
-}
+#   policy_item_hourly {
+#     frequency_interval = 12
+#     retention_unit     = "days"
+#     retention_value    = 2
+#   }
+#   policy_item_daily {
+#     frequency_interval = 1
+#     retention_unit     = "days"
+#     retention_value    = 7
+#   }
+#   policy_item_weekly {
+#     frequency_interval = 1
+#     retention_unit     = "days"
+#     retention_value    = 7
+#   }
+# }
