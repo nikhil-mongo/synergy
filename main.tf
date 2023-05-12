@@ -50,9 +50,9 @@ module "mongodb-cluster" {
   oplog_size_mb                  = each.value.oplog_size_mb
   disk_size_gb                   = each.value.disk_size_gb
   is_production                  = local.is_production
-  export_prod_snapshots          = var.export_prod_snapshots
-  snapshots_export_bucket_id     = local.is_production ? mongodbatlas_cloud_backup_snapshot_export_bucket.snapshots_bucket[0].export_bucket_id : null
-  update_existing_prod_snapshots = var.update_existing_prod_snapshots
+  #export_prod_snapshots          = var.export_prod_snapshots
+  #snapshots_export_bucket_id     = local.is_production ? mongodbatlas_cloud_backup_snapshot_export_bucket.snapshots_bucket[0].export_bucket_id : null
+  #update_existing_prod_snapshots = var.update_existing_prod_snapshots
 }
 
 # resource "mongodbatlas_database_user" "user" {
