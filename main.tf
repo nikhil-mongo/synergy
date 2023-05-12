@@ -2,23 +2,23 @@ locals {
   on_prem_cidr    = ["10.1.0.0/16", "10.3.0.0/16", "10.11.0.0/16", "10.13.0.0/16", "10.113.32.0/20", "10.113.0.0/20"]
   deploy_clusters = {for k, c in var.mongo_clusters :  k => c if c.deploy == true}
   is_production   = var.environment == "prod"
-  db_users        = [for username, userjson in data.vault_generic_secret.users_secret.data:
-  {
-    username     = username
-    password     = jsondecode(userjson).password
-    aws_iam_type = ""
-    roles        = jsondecode(userjson).roles
-    clusters     = jsondecode(userjson).clusters
-  } if username != "list"]
-  iam_users       = [for role in var.iam_roles:
-  {
-    username     = role.arn
-    aws_iam_type = "ROLE"
-    password     = ""
-    roles        = role.roles
-    clusters     = role.clusters
-  }]
-  users = setunion(local.db_users, local.iam_users)
+  # db_users        = [for username, userjson in data.vault_generic_secret.users_secret.data:
+  # {
+  #   username     = username
+  #   password     = jsondecode(userjson).password
+  #   aws_iam_type = ""
+  #   roles        = jsondecode(userjson).roles
+  #   clusters     = jsondecode(userjson).clusters
+  # } if username != "list"]
+  # iam_users       = [for role in var.iam_roles:
+  # {
+  #   username     = role.arn
+  #   aws_iam_type = "ROLE"
+  #   password     = ""
+  #   roles        = role.roles
+  #   clusters     = role.clusters
+  # }]
+  # users = setunion(local.db_users, local.iam_users)
 }
 
 resource "mongodbatlas_project" "data_project" {
@@ -55,30 +55,30 @@ module "mongodb-cluster" {
   update_existing_prod_snapshots = var.update_existing_prod_snapshots
 }
 
-resource "mongodbatlas_database_user" "user" {
-  for_each           = { for user in nonsensitive(local.users) : user.username => user }
-  username           = each.key
-  password           = each.value.aws_iam_type == "" ? sensitive(each.value.password) : null
-  project_id         = mongodbatlas_project.data_project.id
-  auth_database_name = each.value.aws_iam_type == "" ? "admin" : "$external"
-  aws_iam_type       = each.value.aws_iam_type != "" ? each.value.aws_iam_type : null
+# resource "mongodbatlas_database_user" "user" {
+#   for_each           = { for user in nonsensitive(local.users) : user.username => user }
+#   username           = each.key
+#   password           = each.value.aws_iam_type == "" ? sensitive(each.value.password) : null
+#   project_id         = mongodbatlas_project.data_project.id
+#   auth_database_name = each.value.aws_iam_type == "" ? "admin" : "$external"
+#   aws_iam_type       = each.value.aws_iam_type != "" ? each.value.aws_iam_type : null
 
-  dynamic "roles" {
-    for_each = { for item in each.value.roles : "${item.role}_${item.database}" => item }
-    content {
-      role_name     = roles.value.role
-      database_name = roles.value.database
-    }
-  }
+#   dynamic "roles" {
+#     for_each = { for item in each.value.roles : "${item.role}_${item.database}" => item }
+#     content {
+#       role_name     = roles.value.role
+#       database_name = roles.value.database
+#     }
+#   }
 
-  dynamic "scopes" {
-    for_each = toset(each.value.clusters)
-    content {
-      type = "CLUSTER"
-      name = scopes.value
-    }
-  }
-}
+#   dynamic "scopes" {
+#     for_each = toset(each.value.clusters)
+#     content {
+#       type = "CLUSTER"
+#       name = scopes.value
+#     }
+#   }
+# }
 
 resource "mongodbatlas_privatelink_endpoint" "pl" {
   project_id    = mongodbatlas_project.data_project.id

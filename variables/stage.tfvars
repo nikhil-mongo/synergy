@@ -1,6 +1,6 @@
 environment   = "stage"
-aws_vpc_id    = "vpc-0f23ef5a19605c43b"
-vault_address = "https://vault-cluster.vault.aws.hashicorp.cloud:8200"
+aws_vpc_id    = "vpc-0cdffe72d5f819f1f"
+#vault_address = "https://vault-cluster.vault.aws.hashicorp.cloud:8200"
 
 mongo_clusters = {
   baseball = {
@@ -109,5 +109,5 @@ mongo_clusters = {
   }
 }
 
-iam_roles = {
-}
+# iam_roles = {
+# }

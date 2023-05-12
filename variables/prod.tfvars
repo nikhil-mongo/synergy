@@ -1,6 +1,6 @@
 environment                  = "prod"
-aws_vpc_id                   = "vpc-03f8aef4118d8c091"
-vault_address                = "https://vault-cluster.vault.aws.hashicorp.cloud:8200"
+aws_vpc_id                   = "vpc-0cdffe72d5f819f1f"
+#vault_address                = "https://vault-cluster.vault.aws.hashicorp.cloud:8200"
 export_bucket_iam_role       = "63886da94c25904957e3c213"
 snapshots_export_bucket_name = "synergy-mongo-backups-prod"
 
@@ -111,5 +111,5 @@ mongo_clusters = {
   }
 }
 
-iam_roles = {
-}
+# iam_roles = {
+# }

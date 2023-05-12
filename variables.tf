@@ -17,11 +17,11 @@ variable "mongo_clusters" {
   default     = {}
 }
 
-variable "iam_roles" {
-  type        = map(any)
-  description = "List of AWS IAM roles to access MongoDB clusters from EKS"
-  default     = {}
-}
+# variable "iam_roles" {
+#   type        = map(any)
+#   description = "List of AWS IAM roles to access MongoDB clusters from EKS"
+#   default     = {}
+# }
 
 variable "mongodbatlas_provider_region_name" {
   type    = string
@@ -40,21 +40,21 @@ variable "mongodbatlas_org_id" {
   type = string
 }
 
-variable "vault_address" {
-  type = string
-}
+# variable "vault_address" {
+#   type = string
+# }
 
 variable "role_id" {
   type = string
 }
 
-variable "secret_id" {
-  type = string
-}
+# variable "secret_id" {
+#   type = string
+# }
 
-variable "secret_id_accessor" {
-  type = string
-}
+# variable "secret_id_accessor" {
+#   type = string
+# }
 
 variable "snapshots_export_bucket_name" {
   type    = string
