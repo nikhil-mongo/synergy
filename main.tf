@@ -39,7 +39,7 @@ resource "mongodbatlas_cloud_backup_snapshot_export_bucket" "snapshots_bucket" {
 }
 
 module "mongodb-cluster" {
-  
+  source                         = "./modules/mongodb-cluster"
   for_each                       = local.deploy_clusters
   project_id                     = mongodbatlas_project.data_project.id
   provider_region_name           = var.mongodbatlas_provider_region_name
