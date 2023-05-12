@@ -44,9 +44,9 @@ variable "mongodbatlas_org_id" {
 #   type = string
 # }
 
-variable "role_id" {
-  type = string
-}
+# variable "role_id" {
+#   type = string
+# }
 
 # variable "secret_id" {
 #   type = string
