@@ -26,17 +26,17 @@ resource "mongodbatlas_project" "data_project" {
   org_id = var.mongodbatlas_org_id
 }
 
-resource "mongodbatlas_cloud_backup_snapshot_export_bucket" "snapshots_bucket" {
-  count          = local.is_production ? 1 : 0
-  project_id     = mongodbatlas_project.data_project.id
-  iam_role_id    = var.export_bucket_iam_role
-  bucket_name    = var.snapshots_export_bucket_name
-  cloud_provider = "AWS"
+# resource "mongodbatlas_cloud_backup_snapshot_export_bucket" "snapshots_bucket" {
+#   count          = local.is_production ? 1 : 0
+#   project_id     = mongodbatlas_project.data_project.id
+#   iam_role_id    = var.export_bucket_iam_role
+#   bucket_name    = var.snapshots_export_bucket_name
+#   cloud_provider = "AWS"
 
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+# }
 
 module "mongodb-cluster" {
   source                         = "./modules/mongodb-cluster"
